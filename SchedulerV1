@@ -1,0 +1,96 @@
+import tkinter as tk
+from tkinter import messagebox
+import numpy as np
+import pandas as pd
+
+def generate_schedule(employee_data, office_hours, min_personnel_per_hour):
+    schedule = np.zeros((len(employee_data), len(office_hours)))
+    
+    for i, employee in enumerate(employee_data):
+        name, weekly_hours, unavailable_times = employee
+        for j, hour in enumerate(office_hours):
+            if hour not in unavailable_times and weekly_hours > 0:
+                if weekly_hours >= 3:
+                    schedule[i][j] = 3
+                    weekly_hours -= 3
+                elif weekly_hours >= min_personnel_per_hour:
+                    schedule[i][j] = weekly_hours
+                    weekly_hours = 0
+                    
+    return schedule
+
+def export_to_csv(schedule, office_hours, employee_names, file_path):
+    df = pd.DataFrame(schedule, columns=office_hours, index=employee_names)
+    df.to_csv(file_path)
+
+class ScheduleTool:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Schedule Tool")
+        
+        self.employee_names = []
+        self.office_hours = []
+        self.min_personnel = 2
+        
+        self.employee_names_label = tk.Label(self.master, text="Employee Names:")
+        self.employee_names_label.grid(row=0, column=0)
+        self.employee_names_entry = tk.Entry(self.master)
+        self.employee_names_entry.grid(row=0, column=1)
+        self.add_employee_button = tk.Button(self.master, text="Add Employee", command=self.add_employee)
+        self.add_employee_button.grid(row=0, column=2)
+        
+        self.office_hours_label = tk.Label(self.master, text="Office Hours:")
+        self.office_hours_label.grid(row=1, column=0)
+        self.office_hours_entry = tk.Entry(self.master)
+        self.office_hours_entry.grid(row=1, column=1)
+        self.add_office_hour_button = tk.Button(self.master, text="Add Office Hour", command=self.add_office_hour)
+        self.add_office_hour_button.grid(row=1, column=2)
+
+        self.min_personnel_label = tk.Label(self.master, text="Minimum Personnel per Hour:")
+        self.min_personnel_label.grid(row=2, column=0)
+        self.min_personnel_entry = tk.Entry(self.master)
+        self.min_personnel_entry.grid(row=2, column=1)
+        self.min_personnel_entry.insert(0, str(self.min_personnel))
+        self.generate_schedule_button = tk.Button(self.master, text="Generate Schedule", command=self.generate_schedule)
+        self.generate_schedule_button.grid(row=3, column=0)
+        self.export_to_csv_button = tk.Button(self.master, text="Export to CSV", command=self.export_to_csv)
+        self.export_to_csv_button.grid(row=3, column=1)
+        
+        self.employee_details_label = tk.Label(self.master, text="Employee Details:")
+        self.employee_details_label.grid(row=4, column=0, columnspan=2)
+        self.employee_details_text = tk.Text(self.master, height=10, width=40)
+        self.employee_details_text.grid(row=5, column=0, columnspan=2)
+        
+    def add_employee(self):
+        name = self.employee_names_entry.get()
+        self.employee_names.append(name)
+        self.employee_details_text.insert(tk.END, f"Employee: {name}\n")
+        self.employee_names_entry.delete(0, tk.END)
+        
+    def add_office_hour(self):
+        hour = self.office_hours_entry.get()
+        self.office_hours.append(hour)
+        self.employee_details_text.insert(tk.END, f"Office Hour: {hour}\n")
+        self.office_hours_entry.delete(0, tk.END)
+        
+    def generate_schedule(self):
+        min_personnel = int(self.min_personnel_entry.get())
+        employee_data = []
+        for name in self.employee_names:
+            employee_data.append([name, 40, []])
+        schedule = generate_schedule(employee_data, self.office_hours, min_personnel)
+        self.display_schedule(schedule)
+        
+    def display_schedule(self, schedule):
+        self.employee_details_text.insert(tk.END, "Schedule:\n")
+        for i, row in enumerate(schedule):
+            self.employee_details_text.insert(tk.END, f"{self.employee_names[i]}: {row}\n")
+            
+    def export_to_csv(self):
+        file_path = filedialog.asksaveasfilename(defaultextension=".csv")
+        export_to_csv(schedule, self.office_hours, self.employee_names, file_path)
+        
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = ScheduleTool(root)
+    root.mainloop()
