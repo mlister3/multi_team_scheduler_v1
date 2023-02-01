@@ -5,6 +5,8 @@ import pandas as pd
 from tkinter import messagebox
 import csv
 
+
+
 # 1.0 Sets inititial window for office hours and coverage parameters
 OHours = tk.Tk()
 OHours.title("Valencia Employee Scheduler")
@@ -12,16 +14,71 @@ OHours.geometry("1280x720")
 OHours.config(bg="#FDB914")
 
 Hlabel = tk.Label(OHours, text="Office Hours and Coverage Settings", font=("Montserrat", 26))
-Hlabel.pack()
-MDlabel = tk.Label(OHours, text="Monday Hours 24Hour Format 0000-2400", font=("Montserrat", 18))
-MDlabel.pack()
+Hlabel.grid(row=0, column=3, columnspan=5, sticky="nsew")
+Dlabel = tk.Label(OHours, text="24 Hour Format 0000-2400", font=("Montserrat", 18))
+Dlabel.grid(row=1, column=2, columnspan=3)
 
 hours = [f"{m}:00" for m in range(24)]
-var = tk.StringVar(OHours)
-var.set(hours[0])
 
-Mdropdown = ttk.OptionMenu(OHours, var, *hours)
-Mdropdown.pack()
+# Monday Variation
+Monday = tk.Label(OHours, text="Monday", font=("Montserrat", 12))
+Monday.grid(row=3, column=0)
+varM1 = tk.StringVar(OHours)
+varM2 = tk.StringVar(OHours)
+varM1.set(hours[0])
+varM2.set(hours[0])
+M1dropdown = ttk.OptionMenu(OHours, varM1, *hours)
+M1dropdown.grid(row=3, column=2)
+M2dropdown = ttk.OptionMenu(OHours, varM2, *hours)
+M2dropdown.grid(row=3, column=4)
+
+# Tuesday Variation
+Tuesday = tk.Label(OHours, text="Tuesday", font=("Montserrat", 12))
+Tuesday.grid(row=5, column=0)
+varT1 = tk.StringVar(OHours)
+varT2 = tk.StringVar(OHours)
+varT1.set(hours[0])
+varT2.set(hours[0])
+T1dropdown = ttk.OptionMenu(OHours, varT1, *hours)
+T1dropdown.grid(row=5, column=2)
+T2dropdown = ttk.OptionMenu(OHours, varT2, *hours)
+T2dropdown.grid(row=5, column=4)
+
+# Wednesday Variation
+Wednesday = tk.Label(OHours, text="Wednesday", font=("Montserrat", 12))
+Wednesday.grid(row=7, column=0)
+varW1 = tk.StringVar(OHours)
+varW2 = tk.StringVar(OHours)
+varW1.set(hours[0])
+varW2.set(hours[0])
+W1dropdown = ttk.OptionMenu(OHours, varW1, *hours)
+W1dropdown.grid(row=7, column=2)
+W2dropdown = ttk.OptionMenu(OHours, varW2, *hours)
+W2dropdown.grid(row=7, column=4)
+
+# Thursday Variation
+Thurday = tk.Label(OHours, text="Thursday", font=("Montserrat", 12))
+Thurday.grid(row=9, column=0)
+varR1 = tk.StringVar(OHours)
+varR2 = tk.StringVar(OHours)
+varR1.set(hours[0])
+varR2.set(hours[0])
+R1dropdown = ttk.OptionMenu(OHours, varR1, *hours)
+R1dropdown.grid(row=9, column=2)
+R2dropdown = ttk.OptionMenu(OHours, varR2, *hours)
+R2dropdown.grid(row=9, column=4)
+
+# Friday Variation
+Friday = tk.Label(OHours, text="Friday", font=("Montserrat", 12))
+Friday.grid(row=11, column=0)
+varF1 = tk.StringVar(OHours)
+varF2 = tk.StringVar(OHours)
+varF1.set(hours[0])
+varF2.set(hours[0])
+F1dropdown = ttk.OptionMenu(OHours, varF1, *hours)
+F1dropdown.grid(row=11, column=2)
+F2dropdown = ttk.OptionMenu(OHours, varF2, *hours)
+F2dropdown.grid(row=11, column=4)
 
 #2.0 function to close OHours window and proceed to roster window
 def open_employee_roster():
@@ -31,6 +88,6 @@ def open_employee_roster():
     Roster.config(bg="#FDB914")
 # 1.01 Button on initial screen to open roster function
 Screen_One_Complete_Button = tk.Button(OHours, text="Add Employee Roster", command=open_employee_roster)
-Screen_One_Complete_Button.pack()
+Screen_One_Complete_Button.grid(row=13, column=5)
 
 OHours.mainloop()
