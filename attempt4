@@ -1,0 +1,22 @@
+import tkinter as tk
+from tkinter import ttk
+import pandas as pd
+from tkinter import messagebox
+import csv
+
+OHours = tk.Tk()
+OHours.title("Valencia Employee Scheduler" f"Set Office Hours")
+OHours.geometry("300x300")
+OHours.config(bg="#FDB914")
+
+def open_employee_roster():
+    OHours.withdraw()
+    Roster = tk.Tk()
+    Roster.title("Roster Input")
+    Roster.geometry("300x300")
+    Roster.config(bg="#FDB914")
+
+Screen_One_Complete_Button = tk.Button(OHours, text="Add Employee Roster", command=open_employee_roster)
+Screen_One_Complete_Button.pack()
+
+OHours.mainloop()
