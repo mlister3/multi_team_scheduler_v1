@@ -1,21 +1,35 @@
+# Dependencies
 import tkinter as tk
 from tkinter import ttk
 import pandas as pd
 from tkinter import messagebox
 import csv
 
+# 1.0 Sets inititial window for office hours and coverage parameters
 OHours = tk.Tk()
-OHours.title("Valencia Employee Scheduler" f"Set Office Hours")
-OHours.geometry("300x300")
+OHours.title("Valencia Employee Scheduler")
+OHours.geometry("1280x720")
 OHours.config(bg="#FDB914")
 
-def open_employee_roster():
-    OHours.withdraw()
-    Roster = tk.Tk()
-    Roster.title("Roster Input")
-    Roster.geometry("300x300")
-    Roster.config(bg="#FDB914")
+Hlabel = tk.Label(OHours, text="Office Hours and Coverage Settings", font=("Montserrat", 26))
+Hlabel.pack()
+MDlabel = tk.Label(OHours, text="Monday Hours 24Hour Format 0000-2400", font=("Montserrat", 18))
+MDlabel.pack()
 
+hours = [f"{m}:00" for m in range(24)]
+var = tk.StringVar(OHours)
+var.set(hours[0])
+
+Mdropdown = ttk.OptionMenu(OHours, var, *hours)
+Mdropdown.pack()
+
+#2.0 function to close OHours window and proceed to roster window
+def open_employee_roster():
+    Roster = tk.Tk()
+    Roster.title("Valencia Employee Scheduler")
+    Roster.geometry("1280x720")
+    Roster.config(bg="#FDB914")
+# 1.01 Button on initial screen to open roster function
 Screen_One_Complete_Button = tk.Button(OHours, text="Add Employee Roster", command=open_employee_roster)
 Screen_One_Complete_Button.pack()
 
