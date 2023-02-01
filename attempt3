@@ -1,0 +1,68 @@
+import tkinter as tk
+from tkinter import ttk
+import pandas as pd
+from tkinter import messagebox
+import csv
+
+root = tk.Tk()
+root.title("Valencia Employee Scheduler")
+root.geometry("300x300")
+root.config(bg="#FDB914")
+
+employee_list = []
+office_hours = 0
+
+def add_employee():
+    employee_name = entry_name.get()
+    employee_hours = entry_hours.get()
+    if employee_hours.isdigit():
+        employee_hours = int(employee_hours)
+        employee_list.append((employee_name, employee_hours))
+        messagebox.showinfo("Success", f"Employee {employee_name} added to the list with {employee_hours} hours per week.")
+        entry_name.delete(0, 'end')
+        entry_hours.delete(0, 'end')
+    else:
+        messagebox.showerror("Error", "Hours per week must be an integer.")
+
+def set_office_hours():
+    global office_hours
+    office_hours = entry_office.get()
+    if office_hours.isdigit():
+        office_hours = int(office_hours)
+        messagebox.showinfo("Success", "Office hours are set.")
+    else:
+        messagebox.showerror("Error", "Hours per week must be an integer.")
+
+
+def print_employee_list():
+    print(employee_list)
+    print("Office Hours Are: " + str(office_hours))
+
+label_name = tk.Label(root, text="Enter Employee Name:", bg="#FDB914")
+label_name.pack()
+
+entry_name = tk.Entry(root, bg="#FDB914")
+entry_name.pack()
+
+label_hours = tk.Label(root, text="Enter Hours per Week:", bg="#FDB914")
+label_hours.pack()
+
+entry_hours = tk.Entry(root, bg="#FDB914")
+entry_hours.pack()
+
+add_button = tk.Button(root, text="Add Employee", command=add_employee, bg="#FDB914")
+add_button.pack()
+
+label_office = tk.Label(root, text="Enter Office Hours:", bg="#FDB914")
+label_name.pack()
+
+entry_office = tk.Entry(root, bg="#FDB914")
+entry_office.pack()
+
+add_button = tk.Button(root, text="Set Office Hours", command=set_office_hours, bg="#FDB914")
+add_button.pack()
+
+print_button = tk.Button(root, text="Print Employee List", command=print_employee_list, bg="#FDB914")
+print_button.pack()
+
+root.mainloop()
