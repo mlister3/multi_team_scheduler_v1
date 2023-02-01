@@ -7,46 +7,42 @@ import csv
 class ScheduleApp:
     def __init__(self, master):
         self.master = master
-        master.title("Employee Scheduling Tool")
+        master.title("Valencia Employee Scheduling Tool")
         master.geometry("500x500")
-        master.configure(bg="light blue")
+        master.configure(bg="#FDB914")
 
         # Office Hours
-        self.label_office_hours = tk.Label(master, text="Office Hours", bg="light blue")
+        self.label_office_hours = tk.Label(master, text="Office Hours", bg="#C02E18")
         self.label_office_hours.pack()
         self.office_hours = tk.StringVar()
         self.entry_office_hours = tk.Entry(master, textvariable=self.office_hours)
         self.entry_office_hours.pack()
 
-        def submit_office_hours(self):
-            office_hours = self.office_hours.get()
-            print(f"Office hours set to: {office_hours}")
-
-        self.button_submit_office_hours = tk.Button(master, text="Submit", command=submit_office_hours)
+        self.button_submit_office_hours = tk.Button(master, text="Submit", command=self.submit_office_hours)
         self.button_submit_office_hours.pack()
         
         # Minimum Personnel
-        self.label_min_personnel = tk.Label(master, text="Minimum Personnel per Hour", bg="light blue")
+        self.label_min_personnel = tk.Label(master, text="Minimum Personnel per Hour", bg="#C02E18")
         self.label_min_personnel.pack()
         self.min_personnel = tk.StringVar()
         self.entry_min_personnel = tk.Entry(master, textvariable=self.min_personnel)
         self.entry_min_personnel.pack()
 
         # Employee Information
-        self.label_employee_info = tk.Label(master, text="Employee Information", bg="light blue")
+        self.label_employee_info = tk.Label(master, text="Employee Information", bg="#C02E18")
         self.label_employee_info.pack()
         self.name = tk.StringVar()
         self.hours = tk.StringVar()
         self.not_available = tk.StringVar()
-        self.label_name = tk.Label(master, text="Name:", bg="light blue")
+        self.label_name = tk.Label(master, text="Name:", bg="#C02E18")
         self.label_name.pack()
         self.entry_name = tk.Entry(master, textvariable=self.name)
         self.entry_name.pack()
-        self.label_hours = tk.Label(master, text="Hours per Week:", bg="light blue")
+        self.label_hours = tk.Label(master, text="Hours per Week:", bg="#C02E18")
         self.label_hours.pack()
         self.entry_hours = tk.Entry(master, textvariable=self.hours)
         self.entry_hours.pack()
-        self.label_not_available = tk.Label(master, text="Not Available:", bg="light blue")
+        self.label_not_available = tk.Label(master, text="Not Available:", bg="#C02E18")
         self.label_not_available.pack()
         self.entry_not_available = tk.Entry(master, textvariable=self.not_available)
         self.entry_not_available.pack()
@@ -58,23 +54,30 @@ class ScheduleApp:
     
         self.button_generate_schedule = tk.Button(master, text="Generate Schedule", command=self.generate_schedule)
         self.button_generate_schedule.pack()
-    def add_employee(self):
-        self.employee_data.append({"name": self.name.get(), 
-                               "hours_per_week": int(self.hours.get()), 
-                               "not_available": self.not_available.get()})
+
+        def submit_office_hours(self):
+            self.office_hours = self.office_hours.get()
+            print(f"Office hours set to: {self.office_hours}")
+
+        def add_employee(self):
+            self.employee_data.append({"name": self.name.get(), 
+                "hours_per_week": int(self.hours.get()), 
+                "not_available": self.not_available.get()})
         self.name.set("")
         self.hours.set("")
         self.not_available.set("")
         self.button_add_employee = tk.Button(master, text="Add Employee", command=self.add_employee)
         self.button_add_employee.pack()
 
-    def generate_schedule(self):
+        def generate_schedule(self):
+            print("Employee Data:", self.employee_data)
+            print("Office Hours:", self.office_hours.get())
     # logic to generate schedule based on employee information, office hours, and minimum personnel per hour
-        pass
+            pass
 
-    def export_schedule(self):
+        def export_schedule(self):
     # logic to export schedule as a csv file
-        pass
+            pass
 
 root = tk.Tk()
 app = ScheduleApp(master=root)
